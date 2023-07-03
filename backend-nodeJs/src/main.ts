@@ -30,10 +30,24 @@ router.get("/", async (req, res) => {
 
 });
 router.post("/", async (req, res) => {
+    const task = req.body as Task;
+    if (!task.description?.trim()) {
+        res.status(400);
+        return
+    }
+    const rst=await pool.query("INSERT INTO task (description,status) VALUES (?,DEFAULT)",[task.description]);
+    task.id = rst.insertId;
+    task.status = 'NOT_COMPLETED';
+    res.status(201).json(task);
 
 });
-router.delete("/", (req, res) => {
-
+router.delete("/:taskId", async (req, res) => {
+    if (!req.params) {
+        res.status(400);
+        return;
+    }
+    const result = await pool.query("DELETE FROM task WHERE id=?", [req.params.taskId]);
+    res.status(result.affectedRows? 204 : 404);
 
 });
 
