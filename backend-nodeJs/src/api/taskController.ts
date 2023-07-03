@@ -1,6 +1,8 @@
 import mysql, {Pool} from "promise-mysql";
+import env from 'dotenv'
 
 import express from "express";
+import {hostname} from "os";
 
 
 export const router = express.Router();
@@ -8,12 +10,12 @@ let pool: Pool;
 initPool();
 async function initPool() {
     pool= await mysql.createPool({
-        host: 'localhost',
-        port: 3306,
-        database: 'dep10_simple_task_app',
-        user: 'root',
-        password: 'mysql',
-        connectionLimit:5
+        host: process.env.host,
+        port: +process.env.port!,
+        database: process.env.database,
+        user:process.env.username,
+        password: process.env.password,
+        connectionLimit:+process.env.connection_limit!
     });
 }
 
