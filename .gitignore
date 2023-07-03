@@ -1,0 +1,10 @@
+**/.idea
+**/.vscode
+**/target
+**/out
+**/node_modules
+**/.parcel-cache
+**/dist
+
+**/*.iml
+**/Learnings
