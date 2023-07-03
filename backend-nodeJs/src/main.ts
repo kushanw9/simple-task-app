@@ -17,9 +17,19 @@ async function initPool() {
     });
 }
 
+type Task={
+    id:number,
+    description:string,
+    status:'COMPLETED'|'NOT_COMPLETED'
+}
 
-router.post("/", (req, res) => {
+/*Get all tasks*/
+router.get("/", async (req, res) => {
+    const tasks = await pool.query('SELECT * FROM task');
+    res.json(tasks);
 
+});
+router.post("/", async (req, res) => {
 
 });
 router.delete("/", (req, res) => {
