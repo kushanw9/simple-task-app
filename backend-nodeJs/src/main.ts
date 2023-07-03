@@ -51,6 +51,18 @@ router.delete("/:taskId", async (req, res) => {
 
 });
 
+router.patch("/:taskId", async (req, res) => {
+    const task = req.body as Task;
+    const taskId = +req.params.taskId;
+    if (!task.status) {
+        res.status(400);
+        return
+    }
+    const result = await pool.query('UPDATE task SET status=? WHERE id=?', [task.status, taskId]);
+
+    res.status(result.affectedRows ? 204 : 404);
+});
+
 
 app.use("/app/api/v1/tasks", router);
 app.listen(8080, () => console.log("Sever started 8080"));
