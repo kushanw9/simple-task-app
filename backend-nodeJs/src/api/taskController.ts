@@ -1,8 +1,10 @@
 import mysql, {Pool} from "promise-mysql";
 import env from 'dotenv'
 
+env.config();
+
 import express from "express";
-import {hostname} from "os";
+
 
 
 export const router = express.Router();
